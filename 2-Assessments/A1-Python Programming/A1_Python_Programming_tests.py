@@ -1,3 +1,6 @@
+def tests_version():
+     return( "15th October, 2020 (3rd edit)")
+
 import datetime
 
 GEEK_MUSIC_LINKS = [
@@ -18,7 +21,7 @@ SNAKE_MUSIC_LINKS = [
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Crawling+King+Snake+by+The+Doors">Crawling King Snake by The Doors</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Ain\'t+No+Love+In+the+Heart+of+the+City+by+Whitesnake">Ain\'t No Love In the Heart of the City by Whitesnake</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=The+Serpent+by+Genesis">The Serpent by Genesis</a>',
- '<a target="_blank" href="https://www.youtube.com/results?search_query=Charm+the+Snake+by+Christopher+Cross">Charm the Snake by  Christopher Cross</a>',
+ '<a target="_blank" href="https://www.youtube.com/results?search_query=Charm+the+Snake+by+Christopher+Cross">Charm the Snake by Christopher Cross</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Slither+by+Velvet+Revolver">Slither by Velvet Revolver</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Where\'s+My+Snake+by+Bow+Wow+Wow">Where\'s My Snake by Bow Wow Wow</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=The+Sidewinder+Sleeps+Tonight+by+R.E.M.">The Sidewinder Sleeps Tonight by R.E.M.</a>',
@@ -56,11 +59,11 @@ TESTS = {
       ],
 
    "password_strength": [
-       ("python",            "ILLEGAL",     1 ),
+       #("python",            "ILLEGAL",     1 ),
        ("boa constrictor",   "ILLEGAL",     1 ),
-       ("Secret9",           "WEAK",     1 ),
-       ("secret99",          "MEDIUM",   1 ),
-       #("Secret999!",        "MEDIUM",   1 ),  
+       ("Secret",            "ILLEGAL",     1 ),
+       ("secret99",           "WEAK",   1 ),
+       ("Secret999!",        "MEDIUM",   1 ),  
        #("BMX-122333444555Z", "MEDIUM",   1 ),
        ("7Kings8all9Pies!",   "STRONG",   1 ),
     ],
@@ -163,7 +166,6 @@ def do_all_tests( functions ):
       print("Thus, your final grade may also be different from" )
       print("the grade given here.")
 
-def tests_version():
-     return( "14th October, 2020")
+
 
 
