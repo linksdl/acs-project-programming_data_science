@@ -68,3 +68,10 @@ def is_palindrome(s):
 
 
 print(is_palindrome('Was it a cat I aw'))
+
+import datetime
+
+datetime.timedelta
+
+
+print(int('01'))
