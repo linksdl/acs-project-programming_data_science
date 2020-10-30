@@ -15,7 +15,7 @@ GEEK_MUSIC_LINKS = [
  '<a target="_blank" href="https://www.youtube.com/results?search_query=I+Will+Derive!+by+MindofMatthew">I Will Derive! by MindofMatthew</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Lobachevsky+by+Tom+Lehrer">Lobachevsky by Tom Lehrer</a>']
 
-    
+
 SNAKE_MUSIC_LINKS = [
  '<a target="_blank" href="https://www.youtube.com/results?search_query=The+Universe+Song+by+Monty+Python">The Universe Song by Monty Python</a>',
  '<a target="_blank" href="https://www.youtube.com/results?search_query=Crawling+King+Snake+by+The+Doors">Crawling King Snake by The Doors</a>',
@@ -165,7 +165,5 @@ def do_all_tests( functions ):
       print("The tests used for final grading will be different.")
       print("Thus, your final grade may also be different from" )
       print("the grade given here.")
-
-
 
 
