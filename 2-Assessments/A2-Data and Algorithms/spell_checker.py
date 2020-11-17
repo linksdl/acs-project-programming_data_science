@@ -56,48 +56,47 @@ def spell_check_file(filename):
         lines = f.readlines()
 
     special_char = ',;!?_()"*[]{}&#'
-    common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'it', 'that', 'for', 'they', 'I', 'with',
+    common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'had', 'it', 'that', 'for', 'they', 'I', 'with',
                     'as', 'not', 'on', 'she', 'at', 'by', 'this', 'we', 'you', 'do', 'but', 'from', 'or', 'which',
                     'one', 'would', 'all', 'will', 'there', 'say', 'who', 'make', 'when', 'can', 'more', 'if', 'no',
                     'man', 'out', 'other', 'so', 'what', 'time', 'up', 'go', 'about', 'than', 'into', 'could', 'only',
-                    'new', 'year', 'some', 'take', 'come', 'these', 'know', 'see', 'use', 'get', 'like', 'then', 'is']
-
-    # step1, remove the special char in the text
+                    'new', 'year', 'some', 'take', 'come', 'these', 'know', 'see', 'use', 'get', 'like', 'then', 'is',
+                    'give', 'gave', 'title', 'may', 'copy', 'my', 'me', 'us', 'were', 'was', 'day', 'did', 'its', 'went']
     list_of_lines = []
-
     for line in lines:
-        line = line.strip()
+
+        # step1, remove the special char in the text
         for char in special_char:
-            line = line.replace(char, ' ').replace('--', ' ').replace("=>", ' ').replace('...', ' ')
+            line = line.strip().replace(char, ' ').replace('--', ' ').replace("=>", ' ').replace('...', ' ')
         line = ' '.join(line.split())
-        list_of_lines.append(line.split(' '))
+        line = line.split(' ')
+        print('---', line)
 
-    # step2, remove the common words base on the common words list
-    list_of_clear_lines = []
-    # for i in range(len(list_of_lines) - 15960):
-    line = ['re-use', 'it', 'under', 'the', 'terms', 'of', 'the', 'Project', 'Gutenberg', 'License', 'included']
-    print("---", line)
+        # step2, remove the special char in the word
+        for i in range(len(line)):
+            if len(line[i]) > 0 and (line[i][-1] == '.' or line[i][-1] == ':'):
+                line[i] = line[i][:-1]
 
-    for j in range(len(common_words)):
-        w = common_words[j]
-        new_line = [l for l in line if w != l and w.upper() != l and w.title() != l]
-        # if w in line:
-        #     print('---1', w, w.upper(), w.title())
-        #     line.remove(w)
-        #     print(line)
-        # if w.upper() in line:
-        #     print('---2', w, w.upper(), w.title())
-        #     line.remove(w.upper())
-        # if w.title() in line:
-        #     print('---3', w, w.upper(), w.title())
-        #     line.remove(w.title())
-        line = new_line
+        print('===', line)
 
-    print('===', line)
+        # step3, remove the common words and digit base on the common words list
+        for j in range(len(common_words)):
+            w = common_words[j]
+            line = [l for l in line if w != l and w.upper() != l and w.title() != l and not l.isdigit()]
 
-    # list_of_clear_lines.append(list_of_lines[i])
+        print('***', line)
 
-    print(list_of_clear_lines[:10])
+        # list_of_lines.append(list_line)
+
+    # step2, remove the common words and digit base on the common words list
+    # for i in range(len(list_of_lines)):
+    #     line = list_of_lines[i]
+    #     for j in range(len(common_words)):
+    #         w = common_words[j]
+    #         line = [l for l in line if w != l and w.upper() != l and w.title() != l and not l.isdigit()]
+    #     list_of_lines[i] = line
+    #     print(line)
+
     # dict = {}
     # for key in words:
     #     dict[key] = dict.get(key, 0) + 1
@@ -105,4 +104,5 @@ def spell_check_file(filename):
     # print (dict)
 
 
-spell_check_file("Dracula.txt")
+# spell_check_file("Dracula.txt")
+spell_check_file("spelling.txt")
