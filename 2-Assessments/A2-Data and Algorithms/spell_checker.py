@@ -32,59 +32,58 @@ ENGLISH_WORDS = get_english_words()
 
 # Determine if a word is an english word.
 def is_english_word(s):
-    common_words = ['I']
-    if s in common_words:
-        return True
-
     if (s.islower() or s.istitle() or s.isupper()) and s.lower() in ENGLISH_WORDS:
         return True
     else:
         return False
 
-    # print(is_english_word('lve'))
-
 
 # spell checking function
 def spell_check_file(filename):
-    # with open(filename) as f:
-    #     words = f.read().strip()
-    #     words = words.replace('.', '').replace(',', '').replace(';', '').replace('!', '').replace('?', '')
-    #     words = words.replace('_', '').replace('--', '').replace('"', '').replace('(', '').replace(')', '').replace('*',
-    # print(words)
-
     with open(filename) as f:
         lines = f.readlines()
 
     special_char = ',;!?_()"*[]{}&#'
-    common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'had', 'it', 'that', 'for', 'they', 'I', 'with',
+    common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'had', 'it', 'that', 'for', 'they', 'I',
+                    'with',
                     'as', 'not', 'on', 'she', 'at', 'by', 'this', 'we', 'you', 'do', 'but', 'from', 'or', 'which',
                     'one', 'would', 'all', 'will', 'there', 'say', 'who', 'make', 'when', 'can', 'more', 'if', 'no',
                     'man', 'out', 'other', 'so', 'what', 'time', 'up', 'go', 'about', 'than', 'into', 'could', 'only',
                     'new', 'year', 'some', 'take', 'come', 'these', 'know', 'see', 'use', 'get', 'like', 'then', 'is',
-                    'give', 'gave', 'title', 'may', 'copy', 'my', 'me', 'us', 'were', 'was', 'day', 'did', 'its', 'went']
+                    'give', 'gave', 'title', 'may', 'copy', 'my', 'me', 'us', 'were', 'was', 'day', 'did', 'its',
+                    'went']
     list_of_lines = []
-    for line in lines:
-
+    for i in range(len(lines)):
+        line = lines[i]
         # step1, remove the special char in the text
         for char in special_char:
             line = line.strip().replace(char, ' ').replace('--', ' ').replace("=>", ' ').replace('...', ' ')
-        line = ' '.join(line.split())
-        line = line.split(' ')
-        print('---', line)
+        list_line = (' '.join(line.split())).split(' ')
+        # print('---', list_line)
 
         # step2, remove the special char in the word
-        for i in range(len(line)):
-            if len(line[i]) > 0 and (line[i][-1] == '.' or line[i][-1] == ':'):
-                line[i] = line[i][:-1]
-
-        print('===', line)
+        for j in range(len(list_line)):
+            if len(list_line[j]) > 0 and (list_line[j][-1] == '.' or list_line[j][-1] == ':'):
+                list_line[j] = list_line[j][:-1]
+        # print('===', list_line)
 
         # step3, remove the common words and digit base on the common words list
-        for j in range(len(common_words)):
-            w = common_words[j]
-            line = [l for l in line if w != l and w.upper() != l and w.title() != l and not l.isdigit()]
+        for k in range(len(common_words)):
+            w = common_words[k]
+            list_line = [ls for ls in list_line if w != ls and w.upper() != ls and w.title() != ls and not ls.isdigit()]
+        print('***', list_line)
 
-        print('***', line)
+        error_words = []
+        for lw in list_line:
+            if len(lw) > 1 and not is_english_word(lw):
+                error_words.append(lw)
+
+            if len(lw) > 1 and is_english_word(lw):
+                common_words.append(lw)
+
+        # error_words = [lw for lw in list_line if len(lw) > 1 and not is_english_word(lw)]
+        if len(error_words) > 0:
+            print(i, ':', error_words)
 
         # list_of_lines.append(list_line)
 
