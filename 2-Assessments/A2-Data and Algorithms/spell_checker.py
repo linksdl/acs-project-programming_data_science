@@ -44,15 +44,16 @@ def spell_check_file(filename):
         lines = f.readlines()
 
     special_char = ',;!?_()"*[]{}&#'
-    common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'had', 'it', 'that', 'for', 'they', 'I',
-                    'with',
-                    'as', 'not', 'on', 'she', 'at', 'by', 'this', 'we', 'you', 'do', 'but', 'from', 'or', 'which',
-                    'one', 'would', 'all', 'will', 'there', 'say', 'who', 'make', 'when', 'can', 'more', 'if', 'no',
-                    'man', 'out', 'other', 'so', 'what', 'time', 'up', 'go', 'about', 'than', 'into', 'could', 'only',
-                    'new', 'year', 'some', 'take', 'come', 'these', 'know', 'see', 'use', 'get', 'like', 'then', 'is',
-                    'give', 'gave', 'title', 'may', 'copy', 'my', 'me', 'us', 'were', 'was', 'day', 'did', 'its',
-                    'went']
-    list_of_lines = []
+    # most frequently used English words top 82.
+    init_common_words = ['the', 'be', 'of', 'and', 'a', 'to', 'in', 'he', 'have', 'had',
+                         'it', 'that', 'for', 'they', 'I', 'with', 'as', 'not', 'on', 'she', 'at',
+                         'by', 'this', 'we', 'you', 'do', 'but', 'from', 'or', 'which', 'one',
+                         'would', 'all', 'will', 'there', 'say', 'who', 'make', 'when', 'can', 'more',
+                         'if', 'no', 'man', 'out', 'other', 'so', 'what', 'time', 'up', 'go',
+                         'about', 'than', 'into', 'could', 'only', 'new', 'year', 'some', 'take', 'come',
+                         'these', 'know', 'see', 'use', 'get', 'like', 'then', 'is', 'give', 'gave',
+                         'title', 'may', 'copy', 'my', 'me', 'us', 'were', 'was', 'day', 'did', 'its', 'went']
+
     for i in range(len(lines)):
         line = lines[i]
         # step1, remove the special char in the text
@@ -68,8 +69,8 @@ def spell_check_file(filename):
         # print('===', list_line)
 
         # step3, remove the common words and digit base on the common words list
-        for k in range(len(common_words)):
-            w = common_words[k]
+        for k in range(len(init_common_words)):
+            w = init_common_words[k]
             list_line = [ls for ls in list_line if w != ls and w.upper() != ls and w.title() != ls and not ls.isdigit()]
         print('***', list_line)
 
@@ -77,9 +78,9 @@ def spell_check_file(filename):
         for lw in list_line:
             if len(lw) > 1 and not is_english_word(lw):
                 error_words.append(lw)
-
+            # if the word is english word, then add to the common words list
             if len(lw) > 1 and is_english_word(lw):
-                common_words.append(lw)
+                init_common_words.append(lw)
 
         # error_words = [lw for lw in list_line if len(lw) > 1 and not is_english_word(lw)]
         if len(error_words) > 0:
@@ -87,6 +88,7 @@ def spell_check_file(filename):
 
         # list_of_lines.append(list_line)
 
+    print(init_common_words)
     # step2, remove the common words and digit base on the common words list
     # for i in range(len(list_of_lines)):
     #     line = list_of_lines[i]
