@@ -8143,8 +8143,7 @@ Transaction,Item,date_time,period_day,weekday_weekend
 4088,Coke,31-12-2016 15:54,afternoon,weekend
 4089,Cake,31-12-2016 17:36,evening,weekend
 4089,Tea,31-12-2016 17:36,evening,weekend
-4090,Bread,01-01-2017
-21,morning,weekend
+4090,Bread,01-01-2017 01:21,morning,weekend
 4094,Coffee,03-01-2017 09:08,morning,weekday
 4095,Coffee,03-01-2017 09:14,morning,weekday
 4095,Toast,03-01-2017 09:14,morning,weekday

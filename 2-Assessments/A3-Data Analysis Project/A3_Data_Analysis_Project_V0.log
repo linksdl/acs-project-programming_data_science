@@ -1,0 +1,56 @@
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.12.9)  9 DEC 2020 21:46
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**A3_Data_Analysis_Project_V0.tex
+(./A3_Data_Analysis_Project_V0.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06>
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count163
+\c@section=\count164
+\c@subsection=\count165
+\c@subsubsection=\count166
+\c@paragraph=\count167
+\c@subparagraph=\count168
+\c@figure=\count169
+\c@table=\count170
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+
+! LaTeX Error: File `tcolorbox.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: test
+
+! LaTeX Error: File `test.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.4     \usepackage
+                   {parskip} % Stop auto-indenting (to mimic markdown behavi...
+End of file on the terminal!
+
+ 
+Here is how much of TeX's memory you used:
+ 221 strings out of 480935
+ 2615 string characters out of 5916714
+ 241343 words of memory out of 5000000
+ 17738 multiletter control sequences out of 15000+600000
+ 532346 words of font info for 25 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 24i,0n,21p,144b,40s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.

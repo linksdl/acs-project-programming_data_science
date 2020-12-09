@@ -1,0 +1,1184 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{A3\_Data\_Analysis\_Project\_V0}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{p4ds-assignment-3-autumn-2020}{%
+\subsection{P4DS: Assignment 3 (Autumn
+2020)}\label{p4ds-assignment-3-autumn-2020}}
+
+\hypertarget{data-analysis-project}{%
+\section{Data Analysis Project}\label{data-analysis-project}}
+
+\hypertarget{notebook-template-design-brandon-bennett-2020113}{%
+\paragraph{Notebook template design: Brandon Bennett
+(2020/11/3)}\label{notebook-template-design-brandon-bennett-2020113}}
+
+\hypertarget{the-bread-basket}{%
+\section{The Bread Basket}\label{the-bread-basket}}
+
+\hypertarget{project-participants}{%
+\subsubsection{Project participants:}\label{project-participants}}
+
+\begin{itemize}
+\tightlist
+\item
+  A. Daolin Sheng (ml192ds@leeds.ac.uk)
+\item
+  B. Xiangyu Li (ml19xl4@leeds.ac.uk)
+\end{itemize}
+
+    \hypertarget{project-plan}{%
+\section{Project Plan}\label{project-plan}}
+
+\hypertarget{the-data-10-marks}{%
+\subsection{The Data (10 marks)}\label{the-data-10-marks}}
+
+This project just contains a dataset and it comes from a Kaggle
+web-page(\href{https://www.kaggle.com/mittalvasu95/the-bread-basket}{The
+Bread Basket}), and it belongs to ``The Bread Basket'' a bakery located
+in Edinburgh. This a sample dataset about online shopping. The dataset
+includes more than 9000 transactions of customers who order different
+items from this bakery online from 30-10-2016 to 09-04-2017 and has
+20507 entries.
+
+The dataset has 5 columns and they are `Transaction', `Item',
+'date\_time', `period\_day', `weekday\_weekend' respectively. The first
+column `Transaction' is the transaction id which is unique for each
+order and ranges from 1 to 9684, and there is not missing column value.
+The second column name is called `Item' which includes more than 20
+different food goods name, such as Bread, Coffee and Jam etc, and there
+is not missing column value. The third column is the date and time of
+every transaction, and the format of column value is `dd-mm-yyyy hh:mm'.
+the fourth column value is a period time of one day when a customer
+places an order and it has two main value `morning' and `afternoon'. the
+last column is called `weekday\_weekend' which only has two different
+values and they represent whether these orders are on weekday or
+weekend.
+
+In conclusion, this is a simple business dataset, and There are no
+missing values in this data set.
+
+\hypertarget{project-aim-and-objectives-5-marks}{%
+\subsection{Project Aim and Objectives (5
+marks)}\label{project-aim-and-objectives-5-marks}}
+
+This dataset is about the bakery online sales data, so we want to
+develop a simple system which will contain three main modules. These
+modules are statistics, search and recommendation respectively and they
+should help the bakery manager better to operate and manage this bakery
+and to increase sales. In order to implement this simple system, we can
+start from the following aims.
+
+The first aim, we want to this system can have a statistic module based
+on the history data. To specific, we can get we want to get statistic
+data. For example, the sales volume over a period of time, the
+percentage of sales of each product or the max sales volume of a day
+etc, and these statistics data can be easily visualized.
+
+The second aim, we hope this system can have a search module which can
+return different results based on the different search criteria. By
+inputting a parameter `n', for instance, we can find the top `n'
+products in sales volume.
+
+The last aim is about a recommendation module. This module needs to have
+a function which can recommend products as accurately as possible to
+customers based on his/her purchase data. This function will be
+implemented based on machine learning algorithms.
+
+To sum up, these aims or objects will fulfill the demands of different
+aspects of a system. The specific objectives following:
+
+\hypertarget{specific-objectives}{%
+\subsubsection{Specific Objective(s)}\label{specific-objectives}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Objective 1:} Count historical sales volume(daily, monthly).
+\item
+  \textbf{Objective 2:} Find the top `n' popular products in a period of
+  time.
+\item
+  \textbf{Objective 3:} Recommend product to customers
+\end{itemize}
+
+\hypertarget{system-design-5-marks}{%
+\subsection{System Design (5 marks)}\label{system-design-5-marks}}
+
+\hypertarget{architecture}{%
+\subsubsection{Architecture}\label{architecture}}
+
+\begin{figure}
+\centering
+\includegraphics{attachment:Project\%20Architecture-V1.png}
+\caption{Project\%20Architecture-V1.png}
+\end{figure}
+
+This is a simple architecture of this project and it contains 5 steps to
+complete this project. Of course, this architecture is a general data
+science pipeline. The first three steps are data wrangling, data
+cleansing and data preparation, and they all belong to data engineering.
+The data wrangling includes identification, collection and combination
+etc. These are important parts of the data wrangling to prepare for the
+data cleaning. The next step is data cleansing which can handle the
+common errors in a dataset and make sure the data set is valid. The
+third step is data preparation, and there are special tasks, such as
+one-hot encode, normalization, to prepare for a machine learning
+algorithm.
+
+The fourth step mainly uses some algorithms to process data. These
+algorithms would include search algorithm, count algorithm and
+recommendation algorithm. The last step can get the result according to
+the function implemented in the previous step. In this project, the
+output result would be an items list, or a visual diagram, or a text
+report.
+
+\hypertarget{processing-modules-and-algorithms}{%
+\subsubsection{Processing Modules and
+Algorithms}\label{processing-modules-and-algorithms}}
+
+\begin{itemize}
+\tightlist
+\item
+  Convert the column date\_time to other five different columns(the
+  date\_time column will be split into other different five columns)
+\item
+  Implement an algorithm to find the top n popular items over period of
+  time(this algorithm contains two parameters)
+\item
+  Convert the dataset into a feature vectors to model learning
+\end{itemize}
+
+    \hypertarget{program-code-15-marks}{%
+\section{Program Code (15 marks)}\label{program-code-15-marks}}
+
+    Import the some modules needed for this project. Data handling package
+numpy and pandas and the data visualization module matplotlib and
+seaborn.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Import the module numpy, pandas, matplotlib, seaborn to handle and visualize data.}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{warnings}
+\PY{n}{warnings}\PY{o}{.}\PY{n}{filterwarnings}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ignore}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Using the pandas \texttt{read\_csv()} load the dataset and convert the
+raw dataset into a DataFrame. By using pands built-in function
+\texttt{head()}, \texttt{tail()}, \texttt{describe()} and \texttt{info}
+get the dataser profile and then do the data cleansing.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} load the dataset into pandas DataFrame.}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./bread\PYZus{}basket\PYZus{}1.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} load the fist 10 entries.}
+\PY{n}{display}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} load the last 10 entries.}
+\PY{n}{display}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{tail}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} get the info of the DataFrame.}
+\PY{n}{display}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+   Transaction           Item         date_time period_day weekday_weekend
+0            1          Bread  30-10-2016 09:58    morning         weekend
+1            2   Scandinavian  30-10-2016 10:05    morning         weekend
+2            2   Scandinavian  30-10-2016 10:05    morning         weekend
+3            3  Hot chocolate  30-10-2016 10:07    morning         weekend
+4            3            Jam  30-10-2016 10:07    morning         weekend
+5            3        Cookies  30-10-2016 10:07    morning         weekend
+6            4         Muffin  30-10-2016 10:08    morning         weekend
+7            5         Coffee  30-10-2016 10:13    morning         weekend
+8            5         Pastry  30-10-2016 10:13    morning         weekend
+9            5          Bread  30-10-2016 10:13    morning         weekend
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+       Transaction              Item         date_time period_day  \
+20497         9681               Tea  09-04-2017 14:30  afternoon   
+20498         9681    Spanish Brunch  09-04-2017 14:30  afternoon   
+20499         9681  Christmas common  09-04-2017 14:30  afternoon   
+20500         9682            Muffin  09-04-2017 14:32  afternoon   
+20501         9682      Tacos/Fajita  09-04-2017 14:32  afternoon   
+20502         9682            Coffee  09-04-2017 14:32  afternoon   
+20503         9682               Tea  09-04-2017 14:32  afternoon   
+20504         9683            Coffee  09-04-2017 14:57  afternoon   
+20505         9683            Pastry  09-04-2017 14:57  afternoon   
+20506         9684         Smoothies  09-04-2017 15:04  afternoon   
+
+      weekday_weekend  
+20497         weekend  
+20498         weekend  
+20499         weekend  
+20500         weekend  
+20501         weekend  
+20502         weekend  
+20503         weekend  
+20504         weekend  
+20505         weekend  
+20506         weekend  
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 20507 entries, 0 to 20506
+Data columns (total 5 columns):
+ \#   Column           Non-Null Count  Dtype
+---  ------           --------------  -----
+ 0   Transaction      20507 non-null  int64
+ 1   Item             20507 non-null  object
+ 2   date\_time        20507 non-null  object
+ 3   period\_day       20507 non-null  object
+ 4   weekday\_weekend  20507 non-null  object
+dtypes: int64(1), object(4)
+memory usage: 801.2+ KB
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+None
+    \end{verbatim}
+
+    
+    \textbf{By parsing the dataset, because there are not errors in the
+dataset and there is one dataset in this project, it is not necessary to
+merge dataset and data cleansing. we diectly entry into the step three
+`Data preparation'.}
+
+the following funtion \texttt{dataset\_datetime\_split()} implement the
+function which split the column into other five different columns.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} The input argument is a pandas DataFrame.}
+\PY{k}{def} \PY{n+nf}{dataset\PYZus{}datetime\PYZus{}split}\PY{p}{(}\PY{n}{df}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Formatting the date\PYZus{}time into the right format.}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n+nb}{format}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{m\PYZhy{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{Y }\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{H:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{M}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Getting the date}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{date}
+    \PY{c+c1}{\PYZsh{} Getting the time}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{time}
+    \PY{c+c1}{\PYZsh{} Getting the ymonth}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ymonth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:}\PY{n}{x}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Getting the month}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{month}
+    \PY{c+c1}{\PYZsh{} Replacing the month with text.}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,} 
+             \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{January}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{February}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{March}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{April}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{May}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{June}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{July}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{August}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{September}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{October}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{November}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{December}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Getting the weekday}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{weekday}
+    \PY{c+c1}{\PYZsh{} Replacing the week with text.}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} 
+                                          \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Monday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tuesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Wednesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thursday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Friday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Saturday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sunday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Getting the hour}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rhour}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{hour}
+    \PY{c+c1}{\PYZsh{} Replacing the hour with different time range text.}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rhour}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rhour}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{13}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{17}\PY{p}{,}
+                                       \PY{l+m+mi}{18}\PY{p}{,} \PY{l+m+mi}{19}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{21}\PY{p}{,} \PY{l+m+mi}{22}\PY{p}{,} \PY{l+m+mi}{23}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}
+                                       \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{00\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{01\PYZhy{}02}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{02\PYZhy{}03}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{03\PYZhy{}04}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{04\PYZhy{}05}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{05\PYZhy{}06}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{06\PYZhy{}07}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{07\PYZhy{}08}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{08\PYZhy{}09}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{09\PYZhy{}10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10\PYZhy{}11}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{11\PYZhy{}12}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{12\PYZhy{}13}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{13\PYZhy{}14}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{14\PYZhy{}15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{15\PYZhy{}16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{16\PYZhy{}17}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{17\PYZhy{}18}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{18\PYZhy{}19}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{19\PYZhy{}20}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20\PYZhy{}21}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{21\PYZhy{}22}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{22\PYZhy{}23}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{23\PYZhy{}00}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} add a new column}
+    \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+    
+    \PY{k}{return} \PY{n}{df}
+
+\PY{n}{df} \PY{o}{=} \PY{n}{dataset\PYZus{}datetime\PYZus{}split}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+   Transaction           Item           date\_time period\_day weekday\_weekend  \textbackslash{}
+0            1          Bread 2016-10-30 09:58:00    morning         weekend
+1            2   Scandinavian 2016-10-30 10:05:00    morning         weekend
+2            2   Scandinavian 2016-10-30 10:05:00    morning         weekend
+3            3  Hot chocolate 2016-10-30 10:07:00    morning         weekend
+4            3            Jam 2016-10-30 10:07:00    morning         weekend
+5            3        Cookies 2016-10-30 10:07:00    morning         weekend
+6            4         Muffin 2016-10-30 10:08:00    morning         weekend
+7            5         Coffee 2016-10-30 10:13:00    morning         weekend
+8            5         Pastry 2016-10-30 10:13:00    morning         weekend
+9            5          Bread 2016-10-30 10:13:00    morning         weekend
+
+         date      time   ymonth    month weekday  rhour  num
+0  2016-10-30  09:58:00  2016-10  October  Sunday  08-09    1
+1  2016-10-30  10:05:00  2016-10  October  Sunday  09-10    1
+2  2016-10-30  10:05:00  2016-10  October  Sunday  09-10    1
+3  2016-10-30  10:07:00  2016-10  October  Sunday  09-10    1
+4  2016-10-30  10:07:00  2016-10  October  Sunday  09-10    1
+5  2016-10-30  10:07:00  2016-10  October  Sunday  09-10    1
+6  2016-10-30  10:08:00  2016-10  October  Sunday  09-10    1
+7  2016-10-30  10:13:00  2016-10  October  Sunday  09-10    1
+8  2016-10-30  10:13:00  2016-10  October  Sunday  09-10    1
+9  2016-10-30  10:13:00  2016-10  October  Sunday  09-10    1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The following function \texttt{daily\_sales()} and
+\texttt{monthly\_sales()} is countting the sales respectively.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Count the sales of every day.}
+\PY{k}{def} \PY{n+nf}{daily\PYZus{}sales}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{date\PYZus{}list} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:}\PY{n}{x}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}  
+    \PY{n}{trans\PYZus{}dates} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{date\PYZus{}list}\PY{p}{:}
+        \PY{k}{if} \PY{n}{d} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{trans\PYZus{}dates}\PY{p}{:}
+            \PY{n}{trans\PYZus{}dates}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+    \PY{n}{sales\PYZus{}num} \PY{o}{=} \PY{p}{[}\PY{p}{]}       
+    \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{trans\PYZus{}dates}\PY{p}{:}
+        \PY{n}{num} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{date\PYZus{}list}\PY{p}{:}
+            \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{n}{d}\PY{p}{:}
+                \PY{n}{num} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+        \PY{n}{sales\PYZus{}num}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{num}\PY{p}{)}
+        
+    \PY{k}{return} \PY{n}{trans\PYZus{}dates}\PY{p}{,} \PY{n}{sales\PYZus{}num}
+
+\PY{c+c1}{\PYZsh{} Count the sales of every month}
+\PY{k}{def} \PY{n+nf}{monthly\PYZus{}sales}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ymonth\PYZus{}list} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ymonth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}   
+    \PY{n}{trans\PYZus{}months} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{ymonth\PYZus{}list}\PY{p}{:}
+        \PY{k}{if} \PY{n}{d} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{trans\PYZus{}months}\PY{p}{:}
+            \PY{n}{trans\PYZus{}months}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+    \PY{n}{sales\PYZus{}num} \PY{o}{=} \PY{p}{[}\PY{p}{]}       
+    \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{trans\PYZus{}months}\PY{p}{:}
+        \PY{n}{num} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{ymonth\PYZus{}list}\PY{p}{:}
+            \PY{k}{if} \PY{n}{t} \PY{o}{==} \PY{n}{d}\PY{p}{:}
+                \PY{n}{num} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+        \PY{n}{sales\PYZus{}num}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{num}\PY{p}{)}
+        
+    \PY{k}{return} \PY{n}{trans\PYZus{}months}\PY{p}{,} \PY{n}{sales\PYZus{}num}
+\end{Verbatim}
+\end{tcolorbox}
+
+    The function \texttt{top\_n\_popular\_items()} is to implement the
+function which will return different results based on the different
+parmeters \texttt{n} and \texttt{date\_range}. For example, if the
+arguments are `5' and ``{[}`09-10-2016', `11-03-2017'{]}'', the funciton
+will return the top 5 popular intems by coustomers liked between
+09-10-2016 and 11-03-2017.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{70}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{datetime}
+\PY{c+c1}{\PYZsh{} Count the total sales of the top n items in period of time.}
+\PY{k}{def} \PY{n+nf}{top\PYZus{}n\PYZus{}popular\PYZus{}items}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{date\PYZus{}range}\PY{p}{,} \PY{n}{df}\PY{p}{)}\PY{p}{:}
+    \PY{n}{start\PYZus{}date} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{o}{.}\PY{n}{strptime}\PY{p}{(}\PY{n}{date\PYZus{}range}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{date}\PY{p}{(}\PY{p}{)}
+    \PY{n}{end\PYZus{}date} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{o}{.}\PY{n}{strptime}\PY{p}{(}\PY{n}{date\PYZus{}range}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{date}\PY{p}{(}\PY{p}{)}
+    \PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{start\PYZus{}date}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{end\PYZus{}date}\PY{p}{)}\PY{p}{]}
+    \PY{n}{x} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{Item}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{o}{.}\PY{n}{index}
+    \PY{n}{y} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{Item}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{o}{.}\PY{n}{values}
+    
+    \PY{k}{return} \PY{n}{x}\PY{p}{,} \PY{n}{y}
+\end{Verbatim}
+\end{tcolorbox}
+
+    The function \texttt{apriori\_model\_algorithm()} is a simple algorithm
+based on the method of association rule learning. Association Rules
+reflect the interdependence and association between a thing and other
+things. It is an important technology of data mining, which is used to
+mine the correlation between valuable data items from a large amount of
+data.In this function, we use Apriori algorithm to implement the
+correlation between different items. Finally, when a customer purchases
+a food item, we can recommend a item to this customer based on the
+correlation rules.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{mlxtend}\PY{n+nn}{.}\PY{n+nn}{frequent\PYZus{}patterns} \PY{k}{import} \PY{n}{association\PYZus{}rules}\PY{p}{,} \PY{n}{apriori}
+\PY{k+kn}{from} \PY{n+nn}{mlxtend}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{TransactionEncoder}
+
+\PY{n}{trans\PYZus{}items} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transaction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{nunique}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{temp} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transaction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{i}\PY{p}{]}
+    \PY{n}{items} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{temp}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Item}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{if} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{items}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+        \PY{n}{trans\PYZus{}items}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{items}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{apriori\PYZus{}model\PYZus{}algorithm}\PY{p}{(}\PY{n}{trans\PYZus{}items}\PY{p}{)}\PY{p}{:}
+    \PY{n}{encoder} \PY{o}{=} \PY{n}{TransactionEncoder}\PY{p}{(}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} one\PYZhy{}hot encode}
+    \PY{n}{te\PYZus{}ary} \PY{o}{=} \PY{n}{encoder}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{trans\PYZus{}items}\PY{p}{)}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{trans\PYZus{}items}\PY{p}{)}
+    \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{te\PYZus{}ary}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{encoder}\PY{o}{.}\PY{n}{columns\PYZus{}}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Find the frequent items}
+    \PY{n}{frequent\PYZus{}items} \PY{o}{=} \PY{n}{apriori}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{min\PYZus{}support}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{use\PYZus{}colnames}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+    
+    \PY{n}{result} \PY{o}{=} \PY{n}{association\PYZus{}rules}\PY{p}{(}\PY{n}{frequent\PYZus{}items}\PY{p}{,} \PY{n}{metric}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{min\PYZus{}threshold}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
+    \PY{n}{result}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{confidence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+    
+    \PY{k}{return} \PY{n}{result}
+
+\PY{n}{display}\PY{p}{(}\PY{n}{apriori\PYZus{}model\PYZus{}algorithm}\PY{p}{(}\PY{n}{trans\PYZus{}items}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+         antecedents consequents  antecedent support  consequent support  \
+15           (Toast)    (Coffee)            0.033272            0.478881   
+13  (Spanish Brunch)    (Coffee)            0.017608            0.478881   
+7        (Medialuna)    (Coffee)            0.062763            0.478881   
+9           (Pastry)    (Coffee)            0.086745            0.478881   
+6            (Juice)    (Coffee)            0.037809            0.478881   
+0        (Alfajores)    (Coffee)            0.035757            0.478881   
+10        (Sandwich)    (Coffee)            0.071081            0.478881   
+3             (Cake)    (Coffee)            0.103813            0.478881   
+11           (Scone)    (Coffee)            0.034784            0.478881   
+4          (Cookies)    (Coffee)            0.054445            0.478881   
+5    (Hot chocolate)    (Coffee)            0.059198            0.478881   
+2          (Brownie)    (Coffee)            0.040402            0.478881   
+8           (Muffin)    (Coffee)            0.038025            0.478881   
+12            (Soup)    (Coffee)            0.034352            0.478881   
+16     (Bread, Cake)    (Coffee)            0.023334            0.478881   
+18       (Cake, Tea)    (Coffee)            0.023658            0.478881   
+17   (Bread, Pastry)    (Coffee)            0.029275            0.478881   
+14             (Tea)    (Coffee)            0.142811            0.478881   
+1           (Pastry)     (Bread)            0.086745            0.328184   
+
+     support  confidence      lift  leverage  conviction  
+15  0.023226    0.698052  1.457674  0.007292    1.725857  
+13  0.010479    0.595092  1.242672  0.002046    1.287006  
+7   0.035541    0.566265  1.182476  0.005485    1.201469  
+9   0.047964    0.552927  1.154622  0.006423    1.165623  
+6   0.020417    0.540000  1.127629  0.002311    1.132868  
+0   0.019229    0.537764  1.122961  0.002105    1.127388  
+10  0.037917    0.533435  1.113919  0.003878    1.116926  
+3   0.054769    0.527575  1.101684  0.005055    1.103074  
+11  0.018040    0.518634  1.083012  0.001383    1.082583  
+4   0.028087    0.515873  1.077247  0.002014    1.076410  
+5   0.029923    0.505474  1.055533  0.001574    1.053776  
+2   0.019877    0.491979  1.027351  0.000529    1.025782  
+8   0.018689    0.491477  1.026304  0.000479    1.024771  
+12  0.015880    0.462264  0.965301 -0.000571    0.969099  
+16  0.010154    0.435185  0.908755 -0.001020    0.922637  
+18  0.010046    0.424658  0.886771 -0.001283    0.905755  
+17  0.011235    0.383764  0.801376 -0.002785    0.845648  
+14  0.050232    0.351740  0.734504 -0.018157    0.803873  
+1   0.029275    0.337484  1.028339  0.000807    1.014038  
+    \end{verbatim}
+
+    
+    \hypertarget{project-outcome-10-10-marks}{%
+\section{Project Outcome (10 + 10
+marks)}\label{project-outcome-10-10-marks}}
+
+    \hypertarget{overview-of-results}{%
+\subsection{Overview of Results}\label{overview-of-results}}
+
+This is a general overview of the results. The first objective is
+counting the historical sales volume. We will show the results through
+two line charts(Figure1 and Figure2). Figure one is about the sales
+trend of every day. Figure two is about the sales trend of every month.
+We can get some statistic data from the two charts.
+
+The second objective is finding the top n popular products in a period
+of time. In this objective, we will use two different charts(Figure3 and
+Figure4) to show the result. Figure three is a bar chart showing in the
+top ten popular items. Figure four is a pie chart showing the percentage
+of every item among the top ten items. We can find the total sale of
+every item and can know which item is the most popular product in this
+bakery.
+
+The last objective is recommending products to customers. We use an
+unsupervised algorithm to complete this objective. We build a table
+about the correlations of every item. Then, we can recommend a product
+to a customer based on two indexes (confidence and lift).
+
+For details, please see every section below.
+
+    \hypertarget{objective-1-count-historical-sales-volumedaily-monthly}{%
+\subsection{Objective 1 : Count historical sales volume(daily,
+monthly)}\label{objective-1-count-historical-sales-volumedaily-monthly}}
+
+\hypertarget{explanation-of-results}{%
+\subsubsection{Explanation of Results}\label{explanation-of-results}}
+
+This aim is to count the total sales of every day and every month in a
+period of time. Figure one is about the total sales of every day. It is
+plotted in a line chart. In order to plot this chart clearly, we just
+select the first 50 entries. As this figure is shown below, this is a
+sales trend every day. We can see the maximum sales (about 280) and
+minimum() sales(about 40) from this picture, and the average sales per
+day are about 150. So, we can get the statistics data from this figure.
+
+Similarly, figure 2 is about the sales trend of every month by counting
+the total sales of every month from 2016-10-30 to 2017-04-11. the total
+sales of the first month and last month are lower than in other months
+because the data-set is incomplete. From the second figure, we can found
+the total sales of every month is around 3900 except for the first month
+and the last month.
+
+To sum up, this is an efficient solution by describing the sales trend,
+which can help the bakery manager to view the sale figure easily.
+
+\hypertarget{visualisation}{%
+\subsubsection{Visualisation}\label{visualisation}}
+
+The following line chart gives a vivid representation of trend sales of
+every day and every month.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{112}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}theme}\PY{p}{(}\PY{n}{style}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{whitegrid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} The total sales of every day}
+\PY{n}{dx}\PY{p}{,} \PY{n}{dy} \PY{o}{=} \PY{n}{daily\PYZus{}sales}\PY{p}{(}\PY{p}{)}
+\PY{n}{f1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{lineplot}\PY{p}{(}\PY{n}{dx}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{50}\PY{p}{]}\PY{p}{,} \PY{n}{dy}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{50}\PY{p}{]}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tab10}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{1.5}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Days}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Count of sales}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure1 \PYZhy{} The sales trend of every day}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} The total sales of every month}
+\PY{n}{mx}\PY{p}{,} \PY{n}{my} \PY{o}{=} \PY{n}{monthly\PYZus{}sales}\PY{p}{(}\PY{p}{)}
+\PY{n}{f2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{lineplot}\PY{p}{(}\PY{n}{mx}\PY{p}{,} \PY{n}{my}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gnuplot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Count of sales}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure2 \PYZhy{} The sales trend of every month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{A3_Data_Analysis_Project_V0_files/A3_Data_Analysis_Project_V0_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{A3_Data_Analysis_Project_V0_files/A3_Data_Analysis_Project_V0_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{objective-2-find-the-top-n-popular-products-in-a-period-of-time}{%
+\subsection{Objective 2 : Find the top `n' popular products in a period
+of
+time}\label{objective-2-find-the-top-n-popular-products-in-a-period-of-time}}
+
+\hypertarget{explanation-of-results}{%
+\subsubsection{Explanation of Results}\label{explanation-of-results}}
+
+In this section, we can use the function `top\_n\_popular\_items()' to
+get the most liked products by customers. Figure three shown below. In
+this example, we get the top ten popular items bought by customers from
+2016-10-30 to 2017-04-11. As figure 3 and figure 4 shown, The coffee has
+the largest sales (about 5600) among all items and it accounts for
+around 36.45\% of the total sales of the top ten popular items. The
+second, third and fourth items are bread, tea and Cake respectively, and
+they account for around 22.15\%, 9.56\%, 6.83\% respectively.
+
+The pastry, sandwich have similar sales (about 800) accounted for 5.20\%
+among all items. Other items have different sales between 400 to 600. We
+can observe that the total sales volume of the first three items
+accounts for about 68.16\%.
+
+To sum up, we can find the most popular products in this way, which can
+help the bakery manager to store and prepare goods.
+
+\hypertarget{visualisation}{%
+\subsubsection{Visualisation}\label{visualisation}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{145}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{top\PYZus{}n} \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{time\PYZus{}range} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{30\PYZhy{}10\PYZhy{}2016}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{11\PYZhy{}04\PYZhy{}2017}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=} \PY{n}{top\PYZus{}n\PYZus{}popular\PYZus{}items}\PY{p}{(}\PY{n}{top\PYZus{}n}\PY{p}{,} \PY{n}{time\PYZus{}range}\PY{p}{,} \PY{n}{df}\PY{p}{)}
+\PY{n}{f1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tab10}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{1.5}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count of items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure3 \PYZhy{} The top }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{top\PYZus{}n}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ popular Items}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=} \PY{l+m+mi}{20}\PY{p}{)}
+
+\PY{n}{f2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{Y}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{X}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}0.2f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{startangle} \PY{o}{=} \PY{l+m+mi}{90}\PY{p}{,}\PY{n}{pctdistance} \PY{o}{=} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{radius}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure4 \PYZhy{} The percentage of every items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=} \PY{l+m+mi}{20}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{A3_Data_Analysis_Project_V0_files/A3_Data_Analysis_Project_V0_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{A3_Data_Analysis_Project_V0_files/A3_Data_Analysis_Project_V0_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{objective-3-recommend-product-to-customers}{%
+\subsection{Objective 3 ： Recommend product to
+customers}\label{objective-3-recommend-product-to-customers}}
+
+\hypertarget{explanation-of-results}{%
+\subsubsection{Explanation of Results}\label{explanation-of-results}}
+
+The table is shown correlations computing by Apriori algorithm between
+different items. Apriori algorithm is an unsupervised learning algorithm
+and it is looking for a certain relationship between data in a bunch of
+data sets the same as the K-means algorithm. In this algorithm, we need
+to compute the frequent items and correlation rules. Then we need to
+complete the recommendation task based on two indexes(confidence and
+lift). the confidence represents the probability of a good being bought.
+
+Int this table, for example, If we assume that a customer buys a toast
+and then the probability of buying coffee is 69.80\%, and he/his maybe
+buy 1.45 coffee again. Similarly, if one customer bought a pastry,
+he/she will buy bread and the probability is about 33.75\%.
+
+To sum up, this a simple recommendation algorithm. By this way, we can
+obtain which products have a strong relationship, then bundling these
+products as a whole to recommend to a customer, which will help the
+bakery to increase the sale volume.
+
+\hypertarget{visualisation}{%
+\subsubsection{Visualisation}\label{visualisation}}
+
+A table is shown below.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{144}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{correction\PYZus{}df} \PY{o}{=} \PY{n}{apriori\PYZus{}model\PYZus{}algorithm}\PY{p}{(}\PY{n}{trans\PYZus{}items}\PY{p}{)}
+\PY{n}{display}\PY{p}{(}\PY{n}{correction\PYZus{}df}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+         antecedents consequents  antecedent support  consequent support  \
+15           (Toast)    (Coffee)            0.033272            0.478881   
+13  (Spanish Brunch)    (Coffee)            0.017608            0.478881   
+7        (Medialuna)    (Coffee)            0.062763            0.478881   
+9           (Pastry)    (Coffee)            0.086745            0.478881   
+6            (Juice)    (Coffee)            0.037809            0.478881   
+0        (Alfajores)    (Coffee)            0.035757            0.478881   
+10        (Sandwich)    (Coffee)            0.071081            0.478881   
+3             (Cake)    (Coffee)            0.103813            0.478881   
+11           (Scone)    (Coffee)            0.034784            0.478881   
+4          (Cookies)    (Coffee)            0.054445            0.478881   
+5    (Hot chocolate)    (Coffee)            0.059198            0.478881   
+2          (Brownie)    (Coffee)            0.040402            0.478881   
+8           (Muffin)    (Coffee)            0.038025            0.478881   
+12            (Soup)    (Coffee)            0.034352            0.478881   
+16     (Bread, Cake)    (Coffee)            0.023334            0.478881   
+18       (Cake, Tea)    (Coffee)            0.023658            0.478881   
+17   (Bread, Pastry)    (Coffee)            0.029275            0.478881   
+14             (Tea)    (Coffee)            0.142811            0.478881   
+1           (Pastry)     (Bread)            0.086745            0.328184   
+
+     support  confidence      lift  leverage  conviction  
+15  0.023226    0.698052  1.457674  0.007292    1.725857  
+13  0.010479    0.595092  1.242672  0.002046    1.287006  
+7   0.035541    0.566265  1.182476  0.005485    1.201469  
+9   0.047964    0.552927  1.154622  0.006423    1.165623  
+6   0.020417    0.540000  1.127629  0.002311    1.132868  
+0   0.019229    0.537764  1.122961  0.002105    1.127388  
+10  0.037917    0.533435  1.113919  0.003878    1.116926  
+3   0.054769    0.527575  1.101684  0.005055    1.103074  
+11  0.018040    0.518634  1.083012  0.001383    1.082583  
+4   0.028087    0.515873  1.077247  0.002014    1.076410  
+5   0.029923    0.505474  1.055533  0.001574    1.053776  
+2   0.019877    0.491979  1.027351  0.000529    1.025782  
+8   0.018689    0.491477  1.026304  0.000479    1.024771  
+12  0.015880    0.462264  0.965301 -0.000571    0.969099  
+16  0.010154    0.435185  0.908755 -0.001020    0.922637  
+18  0.010046    0.424658  0.886771 -0.001283    0.905755  
+17  0.011235    0.383764  0.801376 -0.002785    0.845648  
+14  0.050232    0.351740  0.734504 -0.018157    0.803873  
+1   0.029275    0.337484  1.028339  0.000807    1.014038  
+    \end{verbatim}
+
+    
+    \hypertarget{conclusion-5-marks}{%
+\section{Conclusion (5 marks)}\label{conclusion-5-marks}}
+
+\hypertarget{acheivements}{%
+\subsubsection{Acheivements}\label{acheivements}}
+
+As we had expected, we count the total sales of every day and every
+month from 2016-10-31 to 2017-04-11, and we can see the sales trend of
+every day and every month. This will help us have a good track on the
+business situation of the store. Besides, we can get which items are
+sold in high volume based on the history data. Finally, by finding the
+relationship between different items, we can recommend the product to a
+customer.
+
+\hypertarget{limitations}{%
+\subsubsection{Limitations}\label{limitations}}
+
+There are two limitations to this project.
+
+\begin{itemize}
+\tightlist
+\item
+  The project was limited to a small dataset, which may affect the
+  accuracy of the recommendation.
+\item
+  There are only five columns in this data set. If we can know more
+  information, such as the price of every item, the category of every
+  item etc., will be better.
+\end{itemize}
+
+\hypertarget{future-work}{%
+\subsubsection{Future Work}\label{future-work}}
+
+In future work, we hope to collect more and more diverse data sets. And
+then, we will improve this system through other common algorithms and
+machine learning algorithms.
+
+    \hypertarget{grading}{%
+\section{Grading}\label{grading}}
+
+\emph{Feedback and marks will be given here.}
+
+\hypertarget{feedback}{%
+\subsubsection{Feedback}\label{feedback}}
+
+\hypertarget{marks}{%
+\subsubsection{Marks}\label{marks}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{DATA}   \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{AIMS}   \PY{o}{=}  \PY{l+m+mi}{5}
+\PY{n}{DESIGN} \PY{o}{=} \PY{l+m+mi}{5}
+
+\PY{n}{CODE} \PY{o}{=} \PY{l+m+mi}{15}
+
+\PY{n}{OUTCOME\PYZus{}EXPLANATION}   \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{OUTCOME\PYZus{}VISUALISATION} \PY{o}{=} \PY{l+m+mi}{10}
+
+\PY{n}{CONCLUSION} \PY{o}{=} \PY{l+m+mi}{5}
+
+\PY{n}{TOTAL} \PY{o}{=} \PY{p}{(} \PY{n}{DATA} \PY{o}{+} \PY{n}{AIMS} \PY{o}{+} \PY{n}{DESIGN} \PY{o}{+} \PY{n}{CODE} 
+          \PY{o}{+} \PY{n}{OUTCOME\PYZus{}VISUALISATION} \PY{o}{+} \PY{n}{OUTCOME\PYZus{}VISUALISATION}
+          \PY{o}{+} \PY{n}{CONCLUSION} \PY{p}{)}
+\PY{n}{TOTAL}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+60
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
